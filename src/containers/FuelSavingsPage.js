@@ -1,19 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
 import * as actions from '../actions/fuelSavingsActions';
-import FuelSavingsForm from '../components/FuelSavingsForm';
 
-export const FuelSavingsPage = (props) => {
-  return (
-    <FuelSavingsForm
-      saveFuelSavings={props.actions.saveFuelSavings}
-      calculateFuelSavings={props.actions.calculateFuelSavings}
-      fuelSavings={props.fuelSavings}
-    />
-  );
-};
+class FuelSavingsPage extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.updateParams = this.updateParams.bind(this);
+  }
+
+  updateParams() {
+    console.log('pushing');
+    this.props.history.push({
+      search: '?tags=111'
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.updateParams}>Click me</button>
+      </div>
+    );
+  }
+}
 
 FuelSavingsPage.propTypes = {
   actions: PropTypes.object.isRequired,
@@ -35,4 +49,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FuelSavingsPage);
+)(withRouter(FuelSavingsPage));
